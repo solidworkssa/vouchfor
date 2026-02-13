@@ -1,13 +1,15 @@
-;; VouchFor
+;; VouchFor Clarity Contract
+;; Social vouching and trust network graph.
 
-(define-map data principal uint)
-(define-data-var counter uint u0)
 
-(define-public (store (value uint))
-    (ok (map-set data tx-sender value)))
+(define-map vouches {voucher: principal, vouched: principal} bool)
+(define-map vouch-count principal uint)
 
-(define-read-only (retrieve (user principal))
-    (ok (default-to u0 (map-get? data user))))
+(define-public (vouch (for principal))
+    (let ((count (default-to u0 (map-get? vouch-count for))))
+        (map-set vouches {voucher: tx-sender, vouched: for} true)
+        (map-set vouch-count for (+ count u1))
+        (ok true)
+    )
+)
 
-(define-public (increment-counter)
-    (ok (var-set counter (+ (var-get counter) u1))))
