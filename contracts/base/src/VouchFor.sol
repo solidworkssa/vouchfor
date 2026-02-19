@@ -2,8 +2,11 @@
 pragma solidity ^0.8.20;
 
 /// @title VouchFor Contract
+/// @author solidworkssa
 /// @notice Social vouching and trust network graph.
 contract VouchFor {
+    string public constant VERSION = "1.0.0";
+
 
     mapping(address => mapping(address => bool)) public vouches;
     mapping(address => uint256) public vouchCount;
