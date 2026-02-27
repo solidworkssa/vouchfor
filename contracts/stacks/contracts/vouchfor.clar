@@ -21,7 +21,7 @@
 
 (define-public (vouch (for principal))
     (let ((count (default-to u0 (map-get? vouch-count for))))
-        (map-set vouches {voucher: tx-sender, vouched: for} true)
+        (map-set vouches {voucher: contract-caller, vouched: for} true)
         (map-set vouch-count for (+ count u1))
         (ok true)
     )
